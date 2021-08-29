@@ -1,4 +1,5 @@
-﻿using Customer.Lib.Infrastructure.Data.Model;
+﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
+using Customer.Lib.Infrastructure.Data.Model;
 using Customer.Lib.Infrastructure.Validation;
 using FluentValidation;
 using System;
@@ -8,11 +9,16 @@ namespace Customer.Lib.Services
 {
     public class CustomerService : ICustomerService
     {
+        private readonly IRepository<CustomerModel> _repository;
+        public CustomerService(IRepository<CustomerModel> repository)
+        {
+            _repository = repository;
+        }
         public Task<CustomerModel> CreateAsync(CustomerModel item)
         {
             var validator = new CustomerValidator();
             validator.ValidateAndThrow(item);
-            return Task.FromResult(item);
+            return _repository.CreateAsync(item);
         }
 
         public Task DeleteAsync(CustomerModel item)
