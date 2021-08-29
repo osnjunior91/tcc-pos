@@ -10,6 +10,6 @@ namespace Customer.Lib.Infrastructure.Data.Model
         public string Email { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
-        public Address Address { get; set; }
+        public AddressModel Address { get; set; }
     }
 }

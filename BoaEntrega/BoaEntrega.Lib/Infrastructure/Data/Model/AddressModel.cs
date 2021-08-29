@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BoaEntrega.Lib.Infrastructure.Data.Model
 {
-    public class Address
+    public class AddressModel
     {
         public string Street { get; set; }
         public string Number { get; set; }
