@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Amazon.DynamoDBv2.DataModel;
+using BoaEntrega.Lib.Infrastructure.Data.Model;
 
-namespace BoaEntrega.Lib.Infrastructure.Data.Model
+namespace Customer.Lib.Infrastructure.Data.Model
 {
+    [DynamoDBTable("customer")]
     public class Customer : ModelBase
     {
         public string Document { get; set; }

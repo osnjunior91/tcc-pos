@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Customer.Lib.Infrastructure.InversionOfControl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,7 @@ namespace Customer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddInversionOfControl();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
