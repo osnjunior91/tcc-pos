@@ -3,6 +3,7 @@ using Customer.Lib.Infrastructure.Data.Model;
 using Customer.Lib.Services;
 using Customer.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Customer.Controllers
 {
@@ -19,11 +20,11 @@ namespace Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CustomerCreateRequest request)
+        public async Task<IActionResult> CreateAsync([FromBody] CustomerCreateRequest request)
         {
             var customer = _mapper.Map<CustomerModel>(request);
-            _customerService.CreateAsync(customer);
-            return Ok();
+            var result = await _customerService.CreateAsync(customer);
+            return Ok(result);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Customer.Lib.Infrastructure.Data.Model;
+using Customer.Lib.Infrastructure.Validation;
+using FluentValidation;
 using System;
 using System.Threading.Tasks;
 
@@ -8,7 +10,9 @@ namespace Customer.Lib.Services
     {
         public Task<CustomerModel> CreateAsync(CustomerModel item)
         {
-            throw new NotImplementedException();
+            var validator = new CustomerValidator();
+            validator.ValidateAndThrow(item);
+            return Task.FromResult(item);
         }
 
         public Task DeleteAsync(CustomerModel item)
