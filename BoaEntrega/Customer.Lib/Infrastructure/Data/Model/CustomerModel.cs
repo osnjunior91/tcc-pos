@@ -4,7 +4,7 @@ using BoaEntrega.Lib.Infrastructure.Data.Model;
 namespace Customer.Lib.Infrastructure.Data.Model
 {
     [DynamoDBTable("customer")]
-    public class Customer : ModelBase
+    public class CustomerModel : ModelBase
     {
         public string Document { get; set; }
         public string Email { get; set; }
