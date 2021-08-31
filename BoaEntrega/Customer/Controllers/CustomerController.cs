@@ -4,6 +4,7 @@ using Customer.Lib.Services;
 using Customer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Customer.Controllers
@@ -43,7 +44,7 @@ namespace Customer.Controllers
             var response = await _customerService.GetAllAsync();
             if (response == null)
                 return NotFound();
-            return Ok(_mapper.Map<CustomerResponse>(response));
+            return Ok(_mapper.Map<List<CustomerResponse>>(response));
         }
 
         [HttpDelete("{id}")]
