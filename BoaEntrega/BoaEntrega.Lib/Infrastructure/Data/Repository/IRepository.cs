@@ -1,4 +1,5 @@
-﻿using BoaEntrega.Lib.Infrastructure.Data.Model;
+﻿using Amazon.DynamoDBv2.DataModel;
+using BoaEntrega.Lib.Infrastructure.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Repository
         Task<List<T>> GetAllAsync();
         Task DeleteAsync(Guid id);
         Task UpdateAsync(T item);
+        Task<List<T>> GetAllByFilterAsync(List<ScanCondition> filter);
     }
 }

@@ -25,7 +25,7 @@ namespace Customer.Controllers
         {
             var customer = _mapper.Map<CustomerModel>(request);
             var result = await _customerService.CreateAsync(customer);
-            return Ok(result);
+            return Ok(_mapper.Map<CustomerResponse>(result));
         }
 
         [HttpGet("{id}")]
@@ -34,7 +34,16 @@ namespace Customer.Controllers
             var response = await _customerService.GetByIdAsync(id);
             if (response == null)
                 return NotFound();
-            return Ok(response);
+            return Ok(_mapper.Map<CustomerResponse>(response));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var response = await _customerService.GetAllAsync();
+            if (response == null)
+                return NotFound();
+            return Ok(_mapper.Map<CustomerResponse>(response));
         }
 
         [HttpDelete("{id}")]

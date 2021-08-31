@@ -3,6 +3,7 @@ using Customer.Lib.Infrastructure.Data.Model;
 using Customer.Lib.Infrastructure.Validation;
 using FluentValidation;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Customer.Lib.Services
@@ -24,6 +25,11 @@ namespace Customer.Lib.Services
         public async Task DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+        }
+
+        public async Task<List<CustomerModel>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
         }
 
         public Task<CustomerModel> GetByIdAsync(Guid id)

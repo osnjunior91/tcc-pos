@@ -10,6 +10,7 @@ namespace BoaEntrega.Lib.Service
     {
         Task<T> CreateAsync(T item);
         Task<T> GetByIdAsync(Guid id);
+        Task<List<T>> GetAllAsync();
         Task<T> UpdateAsync(Guid id, T item);
         Task DeleteAsync(Guid id);
     }

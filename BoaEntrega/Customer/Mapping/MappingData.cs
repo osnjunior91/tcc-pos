@@ -15,6 +15,8 @@ namespace Customer.Mapping
                  .ForMember(dest => dest.CreatedAt, m => m.MapFrom(x => DateTime.Now))
                  .ForMember(dest => dest.ModifiedAt, m => m.MapFrom(x => DateTime.Now));
             CreateMap<Address, AddressModel>().ReverseMap();
+
+            CreateMap<CustomerResponse, CustomerModel>().ReverseMap();
         }
     }
 }

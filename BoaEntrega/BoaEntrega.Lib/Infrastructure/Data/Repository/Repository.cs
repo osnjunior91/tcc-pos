@@ -1,6 +1,7 @@
 ﻿using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using BoaEntrega.Lib.Infrastructure.Data.Model;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,14 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Repository
             await _context.DeleteAsync(id);
         }
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.ScanAsync<T>(new List<ScanCondition>()).GetRemainingAsync();
+        }
+
+        public async Task<List<T>> GetAllByFilterAsync(List<ScanCondition> filter)
+        {
+            return await _context.ScanAsync<T>(filter).GetRemainingAsync();
         }
 
         public async Task<T> GetByIdAsync(Guid id)
