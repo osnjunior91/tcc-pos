@@ -3,6 +3,7 @@ using Customer.Lib.Infrastructure.Data.Model;
 using Customer.Lib.Services;
 using Customer.Model;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Customer.Controllers
@@ -25,6 +26,22 @@ namespace Customer.Controllers
             var customer = _mapper.Map<CustomerModel>(request);
             var result = await _customerService.CreateAsync(customer);
             return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(Guid id)
+        {
+            var response = await _customerService.GetByIdAsync(id);
+            if (response == null)
+                return NotFound();
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            await _customerService.DeleteAsync(id);
+            return Ok();
         }
     }
 }

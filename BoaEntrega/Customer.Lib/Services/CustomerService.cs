@@ -21,14 +21,16 @@ namespace Customer.Lib.Services
             return _repository.CreateAsync(item);
         }
 
-        public Task DeleteAsync(CustomerModel item)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(id);
         }
 
         public Task<CustomerModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            return _repository.GetByIdAsync(id);
         }
 
         public Task<CustomerModel> UpdateAsync(Guid id, CustomerModel item)
