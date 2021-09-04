@@ -32,11 +32,11 @@ namespace Customer.Lib.Services
             return await _repository.GetAllAsync();
         }
 
-        public Task<CustomerModel> GetByIdAsync(Guid id)
+        public async Task<CustomerModel> GetByIdAsync(Guid id)
         {
             if (id == Guid.Empty)
                 throw new ArgumentNullException();
-            return _repository.GetByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
 
         public Task<CustomerModel> UpdateAsync(Guid id, CustomerModel item)

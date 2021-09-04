@@ -1,35 +1,45 @@
-﻿using BoaEntrega.Lib.Service;
+﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Warehouse.Lib.Infrastructure.Data;
+using Warehouse.Lib.Infrastructure.Validation;
 
 namespace Warehouse.Lib.Services
 {
     public class WarehouseService : IWarehouseService
     {
-        public Task<WarehouseData> CreateAsync(WarehouseData item)
+        private readonly IRepository<WarehouseModel> _repository;
+        public WarehouseService(IRepository<WarehouseModel> repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+        public Task<WarehouseModel> CreateAsync(WarehouseModel item)
+        {
+            var validator = new WarehouseValidation();
+            validator.ValidateAndThrow(item);
+            return _repository.CreateAsync(item);
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(id);
         }
 
-        public Task<List<WarehouseData>> GetAllAsync()
+        public async Task<List<WarehouseModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsync();
         }
 
-        public Task<WarehouseData> GetByIdAsync(Guid id)
+        public async Task<WarehouseModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            return await _repository.GetByIdAsync(id);
         }
 
-        public Task<WarehouseData> UpdateAsync(Guid id, WarehouseData item)
+        public Task<WarehouseModel> UpdateAsync(Guid id, WarehouseModel item)
         {
             throw new NotImplementedException();
         }

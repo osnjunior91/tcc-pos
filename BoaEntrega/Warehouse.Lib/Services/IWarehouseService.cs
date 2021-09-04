@@ -3,7 +3,7 @@ using Warehouse.Lib.Infrastructure.Data;
 
 namespace Warehouse.Lib.Services
 {
-    public interface IWarehouseService : IService<WarehouseData>
+    public interface IWarehouseService : IService<WarehouseModel>
     {
     }
 }

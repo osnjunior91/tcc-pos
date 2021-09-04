@@ -6,7 +6,7 @@ using Warehouse.Lib.Infrastructure.Data;
 
 namespace Warehouse.Lib.Infrastructure.Validation
 {
-    public class WarehouseValidation : AbstractValidator<WarehouseData>
+    public class WarehouseValidation : AbstractValidator<WarehouseModel>
     {
         public WarehouseValidation()
         {

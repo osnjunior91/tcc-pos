@@ -7,7 +7,7 @@ using System.Text;
 namespace Warehouse.Lib.Infrastructure.Data
 {
     [DynamoDBTable("warehouse")]
-    public class WarehouseData : ModelBase
+    public class WarehouseModel : ModelBase
     {
         public string RegisterNumber { get; set; }
         public string CorporateName { get; set; }
