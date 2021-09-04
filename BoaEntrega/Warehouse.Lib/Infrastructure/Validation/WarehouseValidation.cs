@@ -8,5 +8,11 @@ namespace Warehouse.Lib.Infrastructure.Validation
 {
     public class WarehouseValidation : AbstractValidator<WarehouseData>
     {
+        public WarehouseValidation()
+        {
+            RuleFor(x => x.CorporateName).NotNull().NotEmpty();
+            RuleFor(x => x.RegisterNumber).NotNull().NotEmpty();
+            RuleFor(x => x.FantasyName).NotNull().NotEmpty();
+        }
     }
 }
