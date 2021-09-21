@@ -18,6 +18,8 @@ namespace Warehouse.Api.Mapping
                  .ForMember(dest => dest.ModifiedAt, m => m.MapFrom(x => DateTime.Now));
             CreateMap<Address, AddressModel>().ReverseMap();
 
+            CreateMap<Phone, PhoneModel>().ReverseMap();
+
             CreateMap<WarehouseCreateResponse, WarehouseModel>().ReverseMap();
         }
     }

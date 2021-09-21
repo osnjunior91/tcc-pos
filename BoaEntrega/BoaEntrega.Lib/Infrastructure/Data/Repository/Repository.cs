@@ -2,9 +2,6 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
-using Amazon.Lambda.Core;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
 using BoaEntrega.Lib.Infrastructure.Data.Model;
 using System;
 using System.Collections.Generic;
@@ -19,26 +16,8 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Repository
 
         public Repository()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LAMBDA_TASK_ROOT")))
-            {
-                var chain = new CredentialProfileStoreChain();
-                AWSCredentials awsCredentials;
-                if (chain.TryGetAWSCredentials("Hackathon-coffee", out awsCredentials))
-                {
-                    _dynamoClient = new AmazonDynamoDBClient(awsCredentials, RegionEndpoint.SAEast1);
-                    _context = new DynamoDBContext(_dynamoClient, new DynamoDBContextConfig { ConsistentRead = true, SkipVersionCheck = true });
-
-                }
-                else
-                {
-                    LambdaLogger.Log("Credenciais nao encontradas");
-                }
-            }
-            else
-            {
-                _dynamoClient = new AmazonDynamoDBClient(RegionEndpoint.SAEast1);
-                _context = new DynamoDBContext(_dynamoClient);
-            }
+            _dynamoClient = new AmazonDynamoDBClient(RegionEndpoint.SAEast1);
+            _context = new DynamoDBContext(_dynamoClient);
         }
 
         public async Task<T> CreateAsync(T item)
