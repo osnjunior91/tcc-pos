@@ -9,7 +9,7 @@
   "region": "",
   "configuration": "Release",
   "framework": "netcoreapp3.1",
-  "s3-prefix": "Product/",
+  "s3-prefix": "Product.Api/",
   "template": "serverless.template",
   "template-parameters": ""
 }
