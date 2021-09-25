@@ -1,4 +1,8 @@
-﻿using Product.Lib.Infrastructure.Data;
+﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
+using FluentValidation;
+using Product.Lib.Infrastructure.Data;
+using Product.Lib.Infrastructure.HttpClient.Warehouse;
+using Product.Lib.Infrastructure.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +12,23 @@ namespace Product.Lib.Services
 {
     public class ProductService : IProductService
     {
-        public Task<ProductModel> CreateAsync(ProductModel item)
+        private readonly IWarehouseApi _warehouseApi;
+        private readonly IRepository<ProductModel> _repository;
+        public ProductService(IWarehouseApi warehouseApi, IRepository<ProductModel> repository)
         {
-            throw new NotImplementedException();
+            _warehouseApi = warehouseApi;
+            _repository = repository;
+        }
+        public async Task<ProductModel> CreateAsync(ProductModel item)
+        {
+            var validator = new ProductValidation();
+            validator.ValidateAndThrow(item);
+
+            var warehouse = await _warehouseApi.GetById(item.WarehouseId);
+            if (warehouse == null)
+                throw new ArgumentException("Invalid parameter WarehouseId");
+
+            return await _repository.CreateAsync(item);
         }
 
         public Task DeleteAsync(Guid id)

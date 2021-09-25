@@ -9,9 +9,9 @@ namespace Product.Lib.Infrastructure.Validation
         public ProductValidation()
         {
             RuleFor(x => x.Name).NotNull().NotEmpty();
-            RuleFor(x => x.Weight).NotNull().LessThanOrEqualTo(0);
-            RuleFor(x => x.Amount).NotNull().LessThanOrEqualTo(0);
-            RuleFor(x => x.Price).NotNull().LessThanOrEqualTo(0);
+            RuleFor(x => x.Weight).NotNull().GreaterThanOrEqualTo(0);
+            RuleFor(x => x.Amount).NotNull().GreaterThanOrEqualTo(0);
+            RuleFor(x => x.Price).NotNull().GreaterThanOrEqualTo(0);
             RuleFor(x => x.WarehouseId).Must(ValidateBar).When(x => x.WarehouseId != null);
         }
 

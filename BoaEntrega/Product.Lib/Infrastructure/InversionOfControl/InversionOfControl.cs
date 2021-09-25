@@ -1,5 +1,6 @@
 ﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using Product.Lib.Infrastructure.HttpClient.Warehouse;
 using Product.Lib.Services;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Product.Lib.Infrastructure.InversionOfControl
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IWarehouseApi, WarehouseApi>();
         }
     }
 }
