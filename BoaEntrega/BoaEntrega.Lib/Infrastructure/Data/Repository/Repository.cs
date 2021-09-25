@@ -22,6 +22,8 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Repository
 
         public async Task<T> CreateAsync(T item)
         {
+            item.CreatedAt = DateTime.Now;
+            item.ModifiedAt = DateTime.Now;
             await _context.SaveAsync(item);
             return item;
         }
@@ -51,6 +53,7 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Repository
 
         public async Task UpdateAsync(T item)
         {
+            item.ModifiedAt = DateTime.Now;
             await _context.SaveAsync(item);
         }
     }
