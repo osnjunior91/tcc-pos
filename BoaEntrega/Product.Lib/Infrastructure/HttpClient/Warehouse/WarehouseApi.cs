@@ -1,7 +1,7 @@
-﻿using Product.Lib.Infrastructure.HttpClient.WareHouse.Response;
+﻿using Newtonsoft.Json;
+using Product.Lib.Infrastructure.HttpClient.WareHouse.Response;
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Product.Lib.Infrastructure.HttpClient.Warehouse
@@ -23,9 +23,8 @@ namespace Product.Lib.Infrastructure.HttpClient.Warehouse
 
             if (response.IsSuccessStatusCode)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync
-                        <WareHouseResponse>(responseStream);
+                string responseStream = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<WareHouseResponse>(responseStream);
             }
             else
             {

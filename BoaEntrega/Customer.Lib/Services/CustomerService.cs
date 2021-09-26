@@ -15,11 +15,11 @@ namespace Customer.Lib.Services
         {
             _repository = repository;
         }
-        public Task<CustomerModel> CreateAsync(CustomerModel item)
+        public async Task<CustomerModel> CreateAsync(CustomerModel item)
         {
             var validator = new CustomerValidator();
             validator.ValidateAndThrow(item);
-            return _repository.CreateAsync(item);
+            return await _repository.CreateAsync(item);
         }
 
         public async Task DeleteAsync(Guid id)

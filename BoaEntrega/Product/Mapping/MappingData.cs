@@ -12,7 +12,9 @@ namespace Product.Api.Mapping
     {
         public MappingData()
         {
-            CreateMap<ProductCreateRequest, ProductModel>().ReverseMap();
+            CreateMap<ProductCreateRequest, ProductModel>()
+                .ForMember(dest => dest.Id, m => m.MapFrom(x => Guid.NewGuid()))
+                .ReverseMap();
         }
     }
 }

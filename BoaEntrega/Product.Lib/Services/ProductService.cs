@@ -25,9 +25,9 @@ namespace Product.Lib.Services
             validator.ValidateAndThrow(item);
 
             var warehouse = await _warehouseApi.GetById(item.WarehouseId);
-            if (warehouse == null)
+            if (warehouse == null || warehouse.Id == Guid.Empty)
                 throw new ArgumentException("Invalid parameter WarehouseId");
-
+            
             return await _repository.CreateAsync(item);
         }
 
