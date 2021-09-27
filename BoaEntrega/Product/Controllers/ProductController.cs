@@ -29,5 +29,14 @@ namespace Product.Api.Controllers
             var result = await _productService.CreateAsync(warehouse);
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(Guid id)
+        {
+            var response = await _productService.GetByIdAsync(id);
+            if (response == null)
+                return NotFound();
+            return Ok(response);
+        }
     }
 }

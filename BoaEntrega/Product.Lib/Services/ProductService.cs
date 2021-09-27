@@ -41,9 +41,11 @@ namespace Product.Lib.Services
             throw new NotImplementedException();
         }
 
-        public Task<ProductModel> GetByIdAsync(Guid id)
+        public async Task<ProductModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            return await _repository.GetByIdAsync(id);
         }
 
         public Task<ProductModel> UpdateAsync(Guid id, ProductModel item)
