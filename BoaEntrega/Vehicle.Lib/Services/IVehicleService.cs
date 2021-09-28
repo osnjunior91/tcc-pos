@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BoaEntrega.Lib.Service;
+using Vehicle.Lib.Infrastructure.Data;
 
 namespace Vehicle.Lib.Services
 {
-    interface IVehicleService
+    public interface IVehicleService : IService<VehicleModel>
     {
     }
 }
