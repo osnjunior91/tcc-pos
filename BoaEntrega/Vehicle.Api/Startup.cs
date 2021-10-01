@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
+using BoaEntrega.Lib.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Vehicle.Lib.Infrastructure.InversionOfControl;
 
 namespace Vehicle.Api
 {
@@ -25,7 +27,8 @@ namespace Vehicle.Api
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
-            //services.AddInversionOfControl();
+            services.AddHttpClient("warehouseClient", c => c.BaseAddress = new System.Uri(Apis.WAREHOUSE_API));
+            services.AddInversionOfControl();
             services.AddSwaggerGen();
             services.AddAutoMapper(typeof(Startup));
         }
