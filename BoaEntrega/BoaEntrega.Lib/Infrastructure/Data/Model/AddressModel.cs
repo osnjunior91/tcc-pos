@@ -13,5 +13,11 @@ namespace BoaEntrega.Lib.Infrastructure.Data.Model
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string Complement { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{this.Street} {this.Number} {this.Neighborhood} {this.City} {this.State} {this.ZipCode}";
+        }
     }
 }

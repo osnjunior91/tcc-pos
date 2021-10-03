@@ -1,3 +1,4 @@
+using BoaEntrega.Lib.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +27,7 @@ namespace Utils.Api
                {
                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                });
+            services.AddHttpClient("googleClient", c => c.BaseAddress = new System.Uri(Apis.GOOGLE_MAPS_API));
             services.AddSwaggerGen();
             services.AddInversionOfControl();
             services.AddAutoMapper(typeof(Startup));

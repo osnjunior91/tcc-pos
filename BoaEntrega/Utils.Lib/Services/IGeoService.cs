@@ -8,6 +8,7 @@ namespace Utils.Lib.Services
 {
     public interface IGeoService
     {
-        Task<double> GetDistanceAsync(AddressModel from, AddressModel to);
+        Task<int> GetDistanceAsync(AddressModel from, AddressModel to);
+        Task<Coordinate> GetCordinatesByAddress(AddressModel address);
     }
 }
