@@ -33,10 +33,14 @@ namespace Utils.Lib.Services
         public async Task<Coordinate> GetCordinatesByAddress(AddressModel address)
         {
             IEnumerable<Address> addresses = await _geocoder.GeocodeAsync(address.ToString());
+
+            if (addresses?.Count() == 0)
+                throw new Exception("Erro ao calcular distancia");
+
             return new Coordinate()
             {
-                Latitude = addresses.FirstOrDefault().Coordinates.Latitude,
-                Longitude = addresses.FirstOrDefault().Coordinates.Longitude
+                Latitude = addresses.FirstOrDefault()?.Coordinates?.Latitude,
+                Longitude = addresses.FirstOrDefault()?.Coordinates?.Longitude
             };
         }
     }

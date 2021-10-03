@@ -11,7 +11,7 @@ using Utils.Lib.Services;
 
 namespace Utils.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class GeoController : ControllerBase
     {
@@ -28,6 +28,13 @@ namespace Utils.Api.Controllers
         public async Task<IActionResult> GetDistanceAsync([FromBody] GetDistanceRequest request)
         {
             return Ok(await _geoService.GetDistanceAsync(_mapper.Map<AddressModel>(request.From), _mapper.Map<AddressModel>(request.To)));
+        }
+
+        [Route("coordinates")]
+        [HttpGet]
+        public async Task<IActionResult> GetDistanceAsync([FromBody] AddressRequest request)
+        {
+            return Ok(await _geoService.GetCordinatesByAddress(_mapper.Map<AddressModel>(request)));
         }
     }
 }
