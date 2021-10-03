@@ -9,6 +9,7 @@ namespace Utils.Lib.Infrastructure.InversionOfControl
         public static void AddInversionOfControl(this IServiceCollection services)
         {
             services.AddScoped<IGeoService, GeoService>();
+            services.AddScoped<IPortageService, PortageService>();
             services.AddScoped<IGoogleMapsApi, GoogleMapsApi>();
         }
     }
