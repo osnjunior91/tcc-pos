@@ -19,6 +19,12 @@ namespace Utils.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok("Parabens retornou correto");
+        }
+
         [Route("price")]
         [HttpGet]
         public async Task<IActionResult> GetPriceAsync([FromBody] GetPriceRequest request)
