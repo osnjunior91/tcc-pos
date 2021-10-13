@@ -8,6 +8,6 @@ namespace Utils.Lib.Services
 {
     public interface IPortageService
     {
-        Task<double> GetPriceAsync(Guid userId, Guid warehouseId, double weight);
+        Task<double> GetPriceAsync(AddressModel from, AddressModel to, double weight);
     }
 }

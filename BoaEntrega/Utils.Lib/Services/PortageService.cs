@@ -19,19 +19,14 @@ namespace Utils.Lib.Services
             _warehouseApi = warehouseApi;
         }
 
-        public async Task<double> GetPriceAsync(Guid userId, Guid warehouseId, double weight)
+        public async Task<double> GetPriceAsync(AddressModel from, AddressModel to, double weight)
         {
-
-            var warehouse = await _warehouseApi.GetById(warehouseId);
-            if (warehouse == null || warehouse.Id == Guid.Empty)
-                throw new ArgumentException("Invalid parameter WarehouseId");
-
-            var distance = 11; //await _geoService.GetDistanceAsync(from, to);
+            var distance = await _geoService.GetDistanceAsync(from, to);
 
             if (distance < 1)
                 throw new Exception("Erro ao recuperar distancia");
 
-            return await Task.FromResult(((distance * weight) * PRICE_BASE));
+            return ((distance * weight) * PRICE_BASE);
         }
     }
 }

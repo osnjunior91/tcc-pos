@@ -24,14 +24,14 @@ namespace Utils.Api.Controllers
         }
 
         [Route("distance")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetDistanceAsync([FromBody] GetDistanceRequest request)
         {
             return Ok(await _geoService.GetDistanceAsync(_mapper.Map<AddressModel>(request.From), _mapper.Map<AddressModel>(request.To)));
         }
 
         [Route("coordinates")]
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> GetDistanceAsync([FromBody] AddressRequest request)
         {
             return Ok(await _geoService.GetCordinatesByAddress(_mapper.Map<AddressModel>(request)));
