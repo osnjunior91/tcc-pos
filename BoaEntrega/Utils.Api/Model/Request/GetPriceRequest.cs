@@ -7,8 +7,8 @@ namespace Utils.Api.Model.Request
 {
     public class GetPriceRequest
     {
-        public AddressRequest From { get; set; }
-        public AddressRequest To { get; set; }
+        public Guid UserId { get; set; }
+        public Guid WarehouseId { get; set; }
         public double Weight { get; set; }
     }
 }

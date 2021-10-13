@@ -28,6 +28,7 @@ namespace Utils.Api
                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                });
             services.AddHttpClient("googleClient", c => c.BaseAddress = new System.Uri(Apis.GOOGLE_MAPS_API));
+            services.AddHttpClient("warehouseClient", c => c.BaseAddress = new System.Uri(Apis.WAREHOUSE_API));
             services.AddSwaggerGen();
             services.AddInversionOfControl();
             services.AddAutoMapper(typeof(Startup));

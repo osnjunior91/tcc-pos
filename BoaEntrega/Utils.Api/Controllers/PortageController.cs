@@ -29,7 +29,7 @@ namespace Utils.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPriceAsync([FromBody] GetPriceRequest request)
         {
-            return Ok(await _portageService.GetPriceAsync(_mapper.Map<AddressModel>(request.From), _mapper.Map<AddressModel>(request.To), request.Weight));
+            return Ok(await _portageService.GetPriceAsync(request.UserId, request.WarehouseId, request.Weight));
         }
     }
 }
