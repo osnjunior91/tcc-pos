@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Utils.Lib.Infrastructure.Data;
 using Utils.Lib.Infrastructure.HttpClient.Warehouse;
 
 namespace Utils.Lib.Services
@@ -19,14 +20,19 @@ namespace Utils.Lib.Services
             _warehouseApi = warehouseApi;
         }
 
-        public async Task<double> GetPriceAsync(AddressModel from, AddressModel to, double weight)
+        public async Task<Portage> GetPriceAsync(AddressModel from, AddressModel to, double weight)
         {
             var distance = await _geoService.GetDistanceAsync(from, to);
 
             if (distance < 1)
                 throw new Exception("Erro ao recuperar distancia");
 
-            return ((distance * weight) * PRICE_BASE);
+            var price = ((distance * weight) * PRICE_BASE);
+
+            return new Portage() {
+                Price = price,
+                Distance = distance
+            };
         }
     }
 }

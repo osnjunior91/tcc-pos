@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Utils.Lib.Infrastructure.Data;
 
 namespace Utils.Lib.Services
 {
     public interface IPortageService
     {
-        Task<double> GetPriceAsync(AddressModel from, AddressModel to, double weight);
+        Task<Portage> GetPriceAsync(AddressModel from, AddressModel to, double weight);
     }
 }
