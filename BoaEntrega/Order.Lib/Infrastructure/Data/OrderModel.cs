@@ -11,10 +11,10 @@ namespace Order.Lib.Infrastructure.Data
     {
         public Guid UserId { get; set; }
         public Guid WarehouseId { get; set; }
-        public List<ProductOrder> Products { get; set; }
-        public double Weight { get; set; }
+        public List<ItemOrder> Items { get; set; }
+        public double? Weight { get; set; }
         public double? ShippingCost { get; set; }
-        public int? DaysForShipping { get; set; }
+        public DateTime? PrevisionDeliveryDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public OrderStatus Status { get; set; }
     }
