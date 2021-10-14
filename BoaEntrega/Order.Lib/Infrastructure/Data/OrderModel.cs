@@ -20,7 +20,6 @@ namespace Order.Lib.Infrastructure.Data
     }
 
     public enum OrderStatus {
-        Placed,
         Separation,
         OnCarriage,
         Ready,

@@ -18,9 +18,9 @@ namespace Order.Api.Mapping
             .ReverseMap();
         }
 
-        private List<ItemOrder> MapItemsId(List<Guid> items)
+        private List<ItemOrder> MapItemsId(List<OrderProductRequest> items)
         {
-            return items.Select(x => new ItemOrder() { Id = x }).ToList();
+            return items.Select(x => new ItemOrder() { Id = x.Id, Amount = x.Amount }).ToList();
         }
     }
 }

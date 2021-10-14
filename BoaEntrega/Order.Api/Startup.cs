@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using BoaEntrega.Lib.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Order.Lib.Infrastructure.InversionOfControl;
 
 namespace Order.Api
 {
@@ -26,8 +29,16 @@ namespace Order.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            //services.AddInversionOfControl();
+            services.AddControllers()
+              .AddJsonOptions(options =>
+              {
+                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+              });
+            services.AddHttpClient("customerClient", c => c.BaseAddress = new System.Uri(Apis.CUSTOMER_API));
+            services.AddHttpClient("warehouseClient", c => c.BaseAddress = new System.Uri(Apis.WAREHOUSE_API));
+            services.AddHttpClient("vehicleClient", c => c.BaseAddress = new System.Uri(Apis.VEHICLE_API));
+            services.AddHttpClient("productClient", c => c.BaseAddress = new System.Uri(Apis.PRODUCTS_API));
+            services.AddInversionOfControl();
             services.AddSwaggerGen();
             services.AddAutoMapper(typeof(Startup));
         }
