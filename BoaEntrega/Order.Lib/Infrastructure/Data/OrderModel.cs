@@ -9,7 +9,7 @@ namespace Order.Lib.Infrastructure.Data
     [DynamoDBTable("order")]
     public class OrderModel : ModelBase
     {
-        public Guid UserId { get; set; }
+        public Guid CustomerId { get; set; }
         public Guid WarehouseId { get; set; }
         public List<ItemOrder> Items { get; set; }
         public double? Weight { get; set; }

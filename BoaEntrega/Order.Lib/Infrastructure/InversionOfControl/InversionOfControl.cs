@@ -1,6 +1,7 @@
 ﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Order.Lib.Infrastructure.HttpClient.Customer;
+using Order.Lib.Infrastructure.HttpClient.Warehouse;
 using Order.Lib.Services;
 
 namespace Order.Lib.Infrastructure.InversionOfControl
@@ -12,6 +13,7 @@ namespace Order.Lib.Infrastructure.InversionOfControl
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICustomerApi, CustomerApi>();
+            services.AddScoped<IWarehouseApi, WarehouseApi>();
         }
     }
 }

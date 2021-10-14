@@ -7,7 +7,7 @@ namespace Order.Api.Model.Request
 {
     public class CreateOrderRequest
     {
-        public Guid UserId { get; set; }
+        public Guid CustomerId { get; set; }
         public Guid WarehouseId { get; set; }
         public List<OrderProductRequest> Items { get; set; }
     }

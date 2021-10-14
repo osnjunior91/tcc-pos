@@ -2,6 +2,7 @@
 using FluentValidation;
 using Order.Lib.Infrastructure.Data;
 using Order.Lib.Infrastructure.HttpClient.Customer;
+using Order.Lib.Infrastructure.HttpClient.Warehouse;
 using Order.Lib.Infrastructure.Validation;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,15 @@ namespace Order.Lib.Services
     {
         private readonly IRepository<OrderModel> _repository;
         private readonly ICustomerApi _customerApi;
+        private readonly IWarehouseApi _warehouseApi;
 
-        public OrderService(IRepository<OrderModel> repository, ICustomerApi customerApi)
+        public OrderService(
+            IRepository<OrderModel> repository, ICustomerApi customerApi, 
+            IWarehouseApi warehouseApi)
         {
             _repository = repository;
             _customerApi = customerApi;
+            _warehouseApi = warehouseApi;
         }
 
         public async Task<OrderModel> CreateAsync(OrderModel item)
@@ -26,11 +31,13 @@ namespace Order.Lib.Services
             var validator = new OrderValidation();
             validator.ValidateAndThrow(item);
 
-            var customer = await _customerApi.GetByIdAsync(item.WarehouseId);
+            var customer = await _customerApi.GetByIdAsync(item.CustomerId);
             if (customer == null)
                 throw new ArgumentException("Invalid parameter CustomerId");
 
-
+            var warehouse = await _warehouseApi.GetById(item.WarehouseId);
+            if (warehouse == null)
+                throw new ArgumentException("Invalid parameter CustomerId");
 
             item.Status = OrderStatus.Separation;
             return await Task.FromResult(item);
