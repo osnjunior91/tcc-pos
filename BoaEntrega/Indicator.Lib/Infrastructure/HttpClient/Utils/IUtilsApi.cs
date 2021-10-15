@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BoaEntrega.Lib.Infrastructure.Data.Model;
 using System.Threading.Tasks;
 
 namespace Indicator.Lib.Infrastructure.HttpClient.Utils
 {
     public interface IUtilsApi
     {
-        Task<PortageResponse> PortageAsync(PortageRequest data);
+        Task<Coordinate> GetCoordinateAsync(AddressModel data);
     }
 }

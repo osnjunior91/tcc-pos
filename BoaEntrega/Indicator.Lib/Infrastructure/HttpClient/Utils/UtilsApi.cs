@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BoaEntrega.Lib.Infrastructure.Data.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,9 +16,9 @@ namespace Indicator.Lib.Infrastructure.HttpClient.Utils
         {
             _httpClient = clientFactory.CreateClient("utilsClient");
         }
-        public async Task<PortageResponse> PortageAsync(PortageRequest data)
+        public async Task<Coordinate> GetCoordinateAsync(AddressModel data)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/Portage/price");
+            var request = new HttpRequestMessage(HttpMethod.Post, "api/v1/Geo/coordinates");
 
             request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
 
@@ -26,7 +27,7 @@ namespace Indicator.Lib.Infrastructure.HttpClient.Utils
             if (response.IsSuccessStatusCode)
             {
                 string responseStream = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<PortageResponse>(responseStream);
+                var result = JsonConvert.DeserializeObject<Coordinate>(responseStream);
 
                 return result;
             }
