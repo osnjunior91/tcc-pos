@@ -119,8 +119,7 @@ namespace Order.Lib.Services
         public async Task<List<OrderModel>> GetOrderByPeriodAsync(DateTime start, DateTime end)
         {
             List<ScanCondition> filter = new List<ScanCondition>();
-            filter.Add(new ScanCondition("CreatedAt", ScanOperator.GreaterThanOrEqual, start));
-            filter.Add(new ScanCondition("CreatedAt", ScanOperator.LessThanOrEqual, end));
+            filter.Add(new ScanCondition("CreatedAt", ScanOperator.Between, new object[] { start, end }));
             return await _repository.GetAllByFilterAsync(filter);
         }
     }
