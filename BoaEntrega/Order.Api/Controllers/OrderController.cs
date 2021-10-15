@@ -32,9 +32,9 @@ namespace Order.Api.Controllers
 
         [Route("period")]
         [HttpGet]
-        public async Task<IActionResult> GetByDateAsync([FromBody] GetDateRequest request)
+        public async Task<IActionResult> GetByDateAsync([FromQuery]DateTime start, [FromQuery] DateTime end)
         {
-            var result = await _orderService.GetOrderByPeriodAsync(request.Start, request.End);
+            var result = await _orderService.GetOrderByPeriodAsync(start, end);
             return Ok(result);
         }
     }
