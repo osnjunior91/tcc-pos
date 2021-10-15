@@ -31,5 +31,19 @@ namespace Order.Lib.Infrastructure.HttpClient.Product
                 return null;
             }
         }
+
+        public async Task<bool> UpdateAmountAsync(Guid id, double amount)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Patch, $"api/v1/Product/amount/{id}");
+
+            request.Content = new StringContent(JsonConvert.SerializeObject(new
+            {
+                amount = amount
+            }), Encoding.UTF8, "application/json") ;
+
+            var response = await _httpClient.SendAsync(request);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }

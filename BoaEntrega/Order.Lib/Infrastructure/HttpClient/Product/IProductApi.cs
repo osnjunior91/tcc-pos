@@ -8,5 +8,6 @@ namespace Order.Lib.Infrastructure.HttpClient.Product
     public interface IProductApi
     {
         Task<ProductApiResponse> GetByIdAsync(Guid id);
+        Task<bool> UpdateAmountAsync(Guid id, double amount);
     }
 }

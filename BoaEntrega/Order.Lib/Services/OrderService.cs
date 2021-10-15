@@ -56,7 +56,12 @@ namespace Order.Lib.Services
                     throw new Exception("Produto não pertence ao deposito.");
                 if (product.Amount > productResponse.Amount)
                     throw new Exception("Não existe produtos suficientes.");
-                
+
+                if (!await _productApi.UpdateAmountAsync(product.Id, (productResponse.Amount - product.Amount)))
+                {
+                    throw new Exception("Error ao atualizar os estoque.");
+                }
+
                 product.Name = productResponse.Name;
                 product.Price = productResponse.Price;
                 product.Weight = productResponse.Weight;
