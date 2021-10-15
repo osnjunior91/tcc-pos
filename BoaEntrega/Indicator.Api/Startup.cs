@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using BoaEntrega.Lib.Constants;
+using Indicator.Lib.Infrastructure.InversionOfControl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,12 +29,30 @@ namespace Indicator.Api
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+              .AddJsonOptions(options =>
+              {
+                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+              });
+            services.AddHttpClient("customerClient", c => c.BaseAddress = new System.Uri(Apis.CUSTOMER_API));
+            services.AddHttpClient("warehouseClient", c => c.BaseAddress = new System.Uri(Apis.WAREHOUSE_API));
+            services.AddHttpClient("utilsClient", c => c.BaseAddress = new System.Uri(Apis.UTILS_API));
+            services.AddHttpClient("productClient", c => c.BaseAddress = new System.Uri(Apis.PRODUCTS_API));
+            services.AddInversionOfControl();
+            services.AddSwaggerGen();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Boa Entrega -  Indicator Api - v1");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -48,7 +69,7 @@ namespace Indicator.Api
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
+                    await context.Response.WriteAsync("Bem vindo a api de indicadores boa entrega.");
                 });
             });
         }

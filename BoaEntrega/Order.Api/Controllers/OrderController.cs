@@ -29,5 +29,13 @@ namespace Order.Api.Controllers
             var result = await _orderService.CreateAsync(warehouse);
             return Ok(result);
         }
+
+        [Route("period")]
+        [HttpGet]
+        public async Task<IActionResult> GetByDateAsync([FromBody] GetDateRequest request)
+        {
+            var result = await _orderService.GetOrderByPeriodAsync(request.Start, request.End);
+            return Ok(result);
+        }
     }
 }

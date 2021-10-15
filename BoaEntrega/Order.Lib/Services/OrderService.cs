@@ -1,4 +1,6 @@
-﻿using BoaEntrega.Lib.Infrastructure.Data.Repository;
+﻿using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
+using BoaEntrega.Lib.Infrastructure.Data.Repository;
 using FluentValidation;
 using Order.Lib.Infrastructure.Data;
 using Order.Lib.Infrastructure.HttpClient.Customer;
@@ -112,6 +114,14 @@ namespace Order.Lib.Services
         public Task<OrderModel> UpdateAsync(Guid id, OrderModel item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<OrderModel>> GetOrderByPeriodAsync(DateTime start, DateTime end)
+        {
+            List<ScanCondition> filter = new List<ScanCondition>();
+            filter.Add(new ScanCondition("CreatedAt", ScanOperator.GreaterThanOrEqual, start));
+            filter.Add(new ScanCondition("CreatedAt", ScanOperator.LessThanOrEqual, end));
+            return await _repository.GetAllByFilterAsync(filter);
         }
     }
 }
