@@ -38,5 +38,13 @@ namespace Product.Api.Controllers
                 return NotFound();
             return Ok(response);
         }
+
+        [Route("amount/{id}")]
+        [HttpPatch]
+        public async Task<IActionResult> UpdateAmountAsync(Guid id, [FromBody] UpdateAmountRequest amount)
+        {
+            await _productService.UpdateAmountAsync(id, amount.Amount);
+            return Ok();
+        }
     }
 }

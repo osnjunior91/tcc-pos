@@ -48,6 +48,15 @@ namespace Product.Lib.Services
             return await _repository.GetByIdAsync(id);
         }
 
+        public async Task UpdateAmountAsync(Guid id, double amount)
+        {
+            var product = await GetByIdAsync(id);
+            if (product == null)
+                throw new ArgumentException("Invalid Id");
+            product.Amount = amount;
+           await _repository.UpdateAsync(product);
+        }
+
         public Task<ProductModel> UpdateAsync(Guid id, ProductModel item)
         {
             throw new NotImplementedException();
