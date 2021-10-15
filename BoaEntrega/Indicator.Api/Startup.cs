@@ -35,7 +35,7 @@ namespace Indicator.Api
                   options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
               });
             services.AddHttpClient("customerClient", c => c.BaseAddress = new System.Uri(Apis.CUSTOMER_API));
-            services.AddHttpClient("warehouseClient", c => c.BaseAddress = new System.Uri(Apis.WAREHOUSE_API));
+            services.AddHttpClient("orderClient", c => c.BaseAddress = new System.Uri(Apis.ORDER_API));
             services.AddHttpClient("utilsClient", c => c.BaseAddress = new System.Uri(Apis.UTILS_API));
             services.AddHttpClient("productClient", c => c.BaseAddress = new System.Uri(Apis.PRODUCTS_API));
             services.AddInversionOfControl();

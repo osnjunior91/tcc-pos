@@ -12,5 +12,6 @@ namespace BoaEntrega.Lib.Constants
         public const string VEHICLE_API = "https://kedkf13af2.execute-api.sa-east-1.amazonaws.com/Prod/";
         public const string GOOGLE_MAPS_API = "https://maps.googleapis.com/maps/api/";
         public const string UTILS_API = "https://k3gulvoxn8.execute-api.sa-east-1.amazonaws.com/Prod/";
+        public const string ORDER_API = "https://wi59awtl0i.execute-api.sa-east-1.amazonaws.com/Prod/";
     }
 }

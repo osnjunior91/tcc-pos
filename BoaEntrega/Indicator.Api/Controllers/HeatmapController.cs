@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Indicator.Lib.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,17 @@ namespace Indicator.Api.Controllers
     [ApiController]
     public class HeatmapController : ControllerBase
     {
+        private readonly IIndicatorService _indicatorService;
+        public HeatmapController(IIndicatorService indicatorService)
+        {
+            _indicatorService = indicatorService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAsync([FromQuery] DateTime start, [FromQuery] DateTime end)
+        {
+            var result = await _indicatorService.GetByPeriodAsync(start, end);
+            return Ok(result);
+        }
     }
 }
