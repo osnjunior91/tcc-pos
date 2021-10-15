@@ -9,5 +9,6 @@ namespace Indicator.Lib.Services
     public interface IIndicatorService
     {
         public Task<Heatmap> GetByPeriodAsync(DateTime start, DateTime end);
+        public Task<OrderDelayed> GetOrderDelayedAsync(DateTime start, DateTime end);
     }
 }

@@ -4,6 +4,7 @@ using Indicator.Lib.Infrastructure.HttpClient.Order;
 using Indicator.Lib.Infrastructure.HttpClient.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,8 +27,6 @@ namespace Indicator.Lib.Services
                 throw new ArgumentException("Data inicial deve ser menor que data final");
 
             var response = new Heatmap(start, end);
-            response.Start = start;
-            response.End = end;
             var orders = await _orderApi.GetByPeriodAsync(start, end);
             response.Count = orders.Count;
             foreach (var order in orders)
@@ -42,6 +41,21 @@ namespace Indicator.Lib.Services
                 });
             }
 
+            return response;
+        }
+
+        public async Task<OrderDelayed> GetOrderDelayedAsync(DateTime start, DateTime end)
+        {
+            var response = new OrderDelayed() 
+            {
+                Start = start,
+                End = end
+            };
+
+            var orders = await _orderApi.GetByPeriodAsync(start, end);
+            response.Count = orders.Count;
+            response.Delayed = orders.Where(x => x.PrevisionDeliveryDate < x.DeliveryDate).Count();
+            response.NotDelayed = response.Count - response.Delayed;
             return response;
         }
     }
