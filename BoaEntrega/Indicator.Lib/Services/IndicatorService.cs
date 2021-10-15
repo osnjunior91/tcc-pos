@@ -1,4 +1,5 @@
 ﻿using Indicator.Lib.Data;
+using Indicator.Lib.Infrastructure.HttpClient.Customer;
 using Indicator.Lib.Infrastructure.HttpClient.Order;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace Indicator.Lib.Services
     public class IndicatorService : IIndicatorService
     {
         private readonly IOrderApi _orderApi;
-        public IndicatorService(IOrderApi orderApi)
+        private readonly ICustomerApi _customerApi;
+        public IndicatorService(IOrderApi orderApi, ICustomerApi customerApi)
         {
             _orderApi = orderApi;
+            _customerApi = customerApi;
         }
         public async Task<Heatmap> GetByPeriodAsync(DateTime start, DateTime end)
         {
@@ -26,6 +29,8 @@ namespace Indicator.Lib.Services
             response.Count = orders.Count;
             foreach (var order in orders)
             {
+                var customer = await _customerApi.GetByIdAsync(order.CustomerId);
+
                 response.Items.Add(new HeatmapItem()
                 {
                     CustomerId = order.CustomerId,

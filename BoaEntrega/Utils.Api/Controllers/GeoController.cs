@@ -32,7 +32,7 @@ namespace Utils.Api.Controllers
 
         [Route("coordinates")]
         [HttpPost]
-        public async Task<IActionResult> GetDistanceAsync([FromBody] AddressRequest request)
+        public async Task<IActionResult> GetCoordinatesAsync([FromBody] AddressRequest request)
         {
             return Ok(await _geoService.GetCordinatesByAddress(_mapper.Map<AddressModel>(request)));
         }

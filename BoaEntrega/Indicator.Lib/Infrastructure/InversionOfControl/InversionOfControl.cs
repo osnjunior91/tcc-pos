@@ -1,4 +1,5 @@
-﻿using Indicator.Lib.Infrastructure.HttpClient.Order;
+﻿using Indicator.Lib.Infrastructure.HttpClient.Customer;
+using Indicator.Lib.Infrastructure.HttpClient.Order;
 using Indicator.Lib.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,6 +14,7 @@ namespace Indicator.Lib.Infrastructure.InversionOfControl
         {
             services.AddScoped<IIndicatorService, IndicatorService>();
             services.AddScoped<IOrderApi, OrderApi>();
+            services.AddScoped<ICustomerApi, CustomerApi>();
         }
     }
 }
