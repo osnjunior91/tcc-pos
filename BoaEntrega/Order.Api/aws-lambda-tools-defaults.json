@@ -13,6 +13,6 @@
     "s3-prefix"     : "Order.Api/",
     "template"      : "serverless.template",
     "template-parameters" : "",
-    "s3-bucket"           : "boaentrega-products-api",
-    "stack-name"          : "ProductsApi"
+    "s3-bucket"           : "boaentrega-order-api",
+    "stack-name"          : "OrderApi"
 }
