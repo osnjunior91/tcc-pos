@@ -15,7 +15,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Indicator.Lib\Indicator.Lib.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-  </ItemGroup>
 </Project>

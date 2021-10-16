@@ -22,8 +22,16 @@ namespace Indicator.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync([FromQuery] DateTime start, [FromQuery] DateTime end)
         {
-            var result = await _indicatorService.GetOrderDelayedAsync(start, end);
-            return Ok(result);
+            try
+            {
+                var result = await _indicatorService.GetOrderDelayedAsync(start, end);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
