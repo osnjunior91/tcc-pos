@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Order.Api.Model.Request;
@@ -25,17 +26,87 @@ namespace Order.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
         {
-            var warehouse = _mapper.Map<OrderModel>(request);
-            var result = await _orderService.CreateAsync(warehouse);
-            return Ok(result);
+            try
+            {
+                var warehouse = _mapper.Map<OrderModel>(request);
+                var result = await _orderService.CreateAsync(warehouse);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                return StatusCode(422, ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(422, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("period")]
         [HttpGet]
         public async Task<IActionResult> GetByDateAsync([FromQuery]DateTime start, [FromQuery] DateTime end)
         {
-            var result = await _orderService.GetOrderByPeriodAsync(start, end);
-            return Ok(result);
+            try
+            {
+                var result = await _orderService.GetOrderByPeriodAsync(start, end);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("carriage/{id}")]
+        [HttpPatch]
+        public async Task<IActionResult> SetOnCarriageAsync(Guid id)
+        {
+            try
+            {
+                var result = await _orderService.UpdateStatusAsync(id, OrderStatus.OnCarriage);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+        [Route("finish/{id}")]
+        [HttpPatch]
+        public async Task<IActionResult> SetReadyAsync(Guid id)
+        {
+            try
+            {
+                var result = await _orderService.UpdateStatusAsync(id, OrderStatus.Ready);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("canceled/{id}")]
+        [HttpPatch]
+        public async Task<IActionResult> SetCanceledAsync(Guid id)
+        {
+            try
+            {
+                var result = await _orderService.UpdateStatusAsync(id, OrderStatus.Canceled);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

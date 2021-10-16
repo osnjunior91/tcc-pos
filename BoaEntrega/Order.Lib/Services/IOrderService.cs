@@ -9,6 +9,7 @@ namespace Order.Lib.Services
 {
     public interface IOrderService : IService<OrderModel>
     {
-        public Task<List<OrderModel>> GetOrderByPeriodAsync(DateTime start, DateTime end);
+        Task<List<OrderModel>> GetOrderByPeriodAsync(DateTime start, DateTime end);
+        Task<OrderModel> UpdateStatusAsync(Guid id, OrderStatus status);
     }
 }

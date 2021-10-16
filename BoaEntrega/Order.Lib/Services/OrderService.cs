@@ -96,24 +96,38 @@ namespace Order.Lib.Services
             }
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _repository.DeleteAsync(id);
         }
 
-        public Task<List<OrderModel>> GetAllAsync()
+        public async Task<List<OrderModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetAllAsync();
         }
 
-        public Task<OrderModel> GetByIdAsync(Guid id)
+        public async Task<OrderModel> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            return await _repository.GetByIdAsync(id);
         }
 
         public Task<OrderModel> UpdateAsync(Guid id, OrderModel item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<OrderModel> UpdateStatusAsync(Guid id, OrderStatus status)
+        {
+            var response = await GetByIdAsync(id);
+            if (response.Status == OrderStatus.Canceled || response.Status == OrderStatus.Ready)
+                throw new Exception("Pedido finalizado ou cancelado anteriormente");
+            if (status == OrderStatus.Ready)
+                response.DeliveryDate = DateTime.Now;
+            response.Status = status;
+            await _repository.UpdateAsync(response);
+            return response;
         }
 
         public async Task<List<OrderModel>> GetOrderByPeriodAsync(DateTime start, DateTime end)
