@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Order.Api.Model.Request;
 using Order.Lib.Infrastructure.Data;
 using Order.Lib.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Order.Api.Controllers
