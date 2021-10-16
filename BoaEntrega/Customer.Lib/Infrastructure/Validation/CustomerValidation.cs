@@ -13,7 +13,6 @@ namespace Customer.Lib.Infrastructure.Validation
             RuleFor(x => x.Document).NotNull().NotEmpty();
             RuleFor(x => x.Email).EmailAddress();
             RuleFor(x => x.Name).NotNull().NotEmpty();
-            RuleFor(x => x.Password).NotNull().NotEmpty();
         }
     }
 }

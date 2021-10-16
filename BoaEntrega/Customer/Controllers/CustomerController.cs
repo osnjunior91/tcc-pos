@@ -5,6 +5,7 @@ using Customer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Customer.Controllers
@@ -24,34 +25,58 @@ namespace Customer.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CustomerCreateRequest request)
         {
-            var customer = _mapper.Map<CustomerModel>(request);
-            var result = await _customerService.CreateAsync(customer);
-            return Ok(_mapper.Map<CustomerResponse>(result));
+            try
+            {
+                var customer = _mapper.Map<CustomerModel>(request);
+                var result = await _customerService.CreateAsync(customer);
+                return Ok(_mapper.Map<CustomerResponse>(result));
+            }
+            catch (ValidationException ex)
+            {
+                return StatusCode(422, ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return StatusCode(422, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var response = await _customerService.GetByIdAsync(id);
-            if (response == null)
-                return NotFound();
-            return Ok(_mapper.Map<CustomerResponse>(response));
+            try
+            {
+                var response = await _customerService.GetByIdAsync(id);
+                if (response == null)
+                    return NotFound();
+                return Ok(_mapper.Map<CustomerResponse>(response));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var response = await _customerService.GetAllAsync();
-            if (response == null)
-                return NotFound();
-            return Ok(_mapper.Map<List<CustomerResponse>>(response));
-        }
+            try
+            {
+                var response = await _customerService.GetAllAsync();
+                if (response == null)
+                    return NotFound();
+                return Ok(_mapper.Map<List<CustomerResponse>>(response));
+            }
+            catch (Exception ex)
+            {
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(Guid id)
-        {
-            await _customerService.DeleteAsync(id);
-            return Ok();
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -39,9 +39,16 @@ namespace Customer.Lib.Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public Task<CustomerModel> UpdateAsync(Guid id, CustomerModel item)
+        public async Task<CustomerModel> UpdateAsync(Guid id, CustomerModel item)
         {
-            throw new NotImplementedException();
+            if (id == Guid.Empty)
+                throw new ArgumentNullException();
+            var response = await GetByIdAsync(id);
+
+            response.Name = item.Name;
+            response.Address = item.Address;
+            await _repository.UpdateAsync(response);
+            return response;
         }
     }
 }
