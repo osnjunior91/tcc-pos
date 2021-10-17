@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Order.Api.Model.Request;
+using Order.Api.Model.Response;
 using Order.Lib.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace Order.Api.Mapping
             .ForMember(dest => dest.Id, m => m.MapFrom(x => Guid.NewGuid()))
             .ForMember(dest => dest.Items, m => m.MapFrom(x => MapItemsId(x.Items)))
             .ReverseMap();
+
+            CreateMap<OrderStatusResponse, OrderModel>().ReverseMap();
+            CreateMap<OrderCreateResponse, OrderModel>().ReverseMap();
         }
 
         private List<ItemOrder> MapItemsId(List<OrderProductRequest> items)

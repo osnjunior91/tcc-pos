@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Order.Api.Model.Request;
+using Order.Api.Model.Response;
 using Order.Lib.Infrastructure.Data;
 using Order.Lib.Services;
 using System;
@@ -21,13 +22,16 @@ namespace Order.Api.Controllers
             _orderService = orderService;
         }
         [HttpPost]
+        [ProducesResponseType(typeof(OrderCreateResponse), 200)]
+        [ProducesResponseType(typeof(string), 422)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> CreateAsync([FromBody] CreateOrderRequest request)
         {
             try
             {
                 var warehouse = _mapper.Map<OrderModel>(request);
                 var result = await _orderService.CreateAsync(warehouse);
-                return Ok(result);
+                return Ok(_mapper.Map<OrderCreateResponse>(result));
             }
             catch (ValidationException ex)
             {
@@ -43,14 +47,34 @@ namespace Order.Api.Controllers
             }
         }
 
+        [Route("status/{id}")]
+        [HttpGet]
+        [ProducesResponseType(typeof(OrderStatusResponse), 200)]
+        [ProducesResponseType(typeof(string), 500)]
+        public async Task<IActionResult> GetByDateAsync(Guid id)
+        {
+            try
+            {
+                var result = await _orderService.GetByIdAsync(id);
+                return Ok(_mapper.Map<OrderStatusResponse>(result));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
         [Route("period")]
         [HttpGet]
+        [ProducesResponseType(typeof(OrderModel), 200)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> GetByDateAsync([FromQuery]DateTime start, [FromQuery] DateTime end)
         {
             try
             {
                 var result = await _orderService.GetOrderByPeriodAsync(start, end);
-                return Ok(result);
+                return Ok(_mapper.Map<OrderStatusResponse>(result));
             }
             catch (Exception ex)
             {
@@ -61,12 +85,14 @@ namespace Order.Api.Controllers
 
         [Route("carriage/{id}")]
         [HttpPatch]
+        [ProducesResponseType(typeof(OrderCreateResponse), 200)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> SetOnCarriageAsync(Guid id)
         {
             try
             {
                 var result = await _orderService.UpdateStatusAsync(id, OrderStatus.OnCarriage);
-                return Ok(result);
+                return Ok(_mapper.Map<OrderStatusResponse>(result));
             }
             catch (Exception ex)
             {
@@ -76,12 +102,14 @@ namespace Order.Api.Controllers
         }
         [Route("finish/{id}")]
         [HttpPatch]
+        [ProducesResponseType(typeof(OrderCreateResponse), 200)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> SetReadyAsync(Guid id)
         {
             try
             {
                 var result = await _orderService.UpdateStatusAsync(id, OrderStatus.Ready);
-                return Ok(result);
+                return Ok(_mapper.Map<OrderStatusResponse>(result));
             }
             catch (Exception ex)
             {
@@ -92,12 +120,14 @@ namespace Order.Api.Controllers
 
         [Route("canceled/{id}")]
         [HttpPatch]
+        [ProducesResponseType(typeof(OrderCreateResponse), 200)]
+        [ProducesResponseType(typeof(string), 500)]
         public async Task<IActionResult> SetCanceledAsync(Guid id)
         {
             try
             {
                 var result = await _orderService.UpdateStatusAsync(id, OrderStatus.Canceled);
-                return Ok(result);
+                return Ok(_mapper.Map<OrderStatusResponse>(result));
             }
             catch (Exception ex)
             {
