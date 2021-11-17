@@ -28,6 +28,8 @@ namespace Indicator.Lib.Services
 
             var response = new Heatmap(start, end);
             var orders = await _orderApi.GetByPeriodAsync(start, end);
+            if (orders == null)
+                return response;
             response.Count = orders.Count;
             foreach (var order in orders)
             {

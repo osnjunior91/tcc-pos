@@ -6,6 +6,7 @@ using Order.Api.Model.Response;
 using Order.Lib.Infrastructure.Data;
 using Order.Lib.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Order.Api.Controllers
@@ -74,7 +75,7 @@ namespace Order.Api.Controllers
             try
             {
                 var result = await _orderService.GetOrderByPeriodAsync(start, end);
-                return Ok(_mapper.Map<OrderStatusResponse>(result));
+                return Ok(_mapper.Map<List<OrderStatusResponse>>(result));
             }
             catch (Exception ex)
             {
