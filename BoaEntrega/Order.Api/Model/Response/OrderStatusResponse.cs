@@ -8,6 +8,7 @@ namespace Order.Api.Model.Response
 {
     public class OrderStatusResponse
     {
+        public Guid Id { get; set; }
         public Guid CustomerId { get; set; }
         public DateTime? PrevisionDeliveryDate { get; set; }
         public OrderStatus Status { get; set; }
